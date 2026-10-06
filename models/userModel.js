@@ -37,6 +37,13 @@ const User = {
     const [result] = await db.execute(sql, [id]);
     return result.affectedRows > 0;
   },
+
+  async findByUserName(username){
+    const sql = `
+      SELECT userID, username, passwd, urole FROM users WHERE username = ?`;
+      const [rows] = await db.execute(sql, [username]);
+      return rows[0] || null;
+  },
 };
 
 module.exports = User;

@@ -9,8 +9,8 @@ const JWT_SECRET =  "secret-key";
 
 router.post("/login", async function (req, res) {
   try {
-    const {username,psswd} = req.body;
-    if(!username || !psswd){
+    const {username,passwd} = req.body;
+    if(!username || !passwd){
       return res.status(400).json({
         success:false,
         error: "Username and password are required."
@@ -18,7 +18,7 @@ router.post("/login", async function (req, res) {
     }
     const users = await User.findByUserName(username);
 
-    if(!users || users.psswd !== psswd){
+    if(!users || users.passwd !== passwd){
       return res.status(401).json({
         success:false,
         error: "Invalid username or password"
@@ -45,6 +45,7 @@ router.post("/login", async function (req, res) {
 // Endpoint: GET /api/users - Find all users (READ)
 
 router.use(authenicateToken);
+
 router.get("/", async function (req, res){
  try{
   const users = await User.findAll();
